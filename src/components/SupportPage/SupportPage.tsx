@@ -57,20 +57,22 @@ const SupportPage: React.FC = () => {
 
   const getCurrentStep = (): TroubleshootingStep | null => {
     const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
-    if (!equipmentData || selectedIssue === null) return null;
-    
+    if (!equipmentData || selectedIssue === null || selectedIssue < 0 || selectedIssue >= equipmentData.commonIssues.length) {
+        return null;
+    }
+
     const issue = equipmentData.commonIssues[selectedIssue];
-    if (!issue) return null;
-  
     return issue.troubleshootingSteps[currentStep] || null;
-  };
+};
 
   const getCurrentIssueTitle = (): string => {
     const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
-    if (!equipmentData || selectedIssue === null) return '';
-    
+    if (!equipmentData || selectedIssue === null || selectedIssue < 0 || selectedIssue >= equipmentData.commonIssues.length) {
+        return '';
+    }
+
     return equipmentData.commonIssues[selectedIssue]?.title || '';
-  };
+};
 
   const handleStepResponse = (isSuccess: boolean) => {
     setStepResults([...stepResults, isSuccess]);
