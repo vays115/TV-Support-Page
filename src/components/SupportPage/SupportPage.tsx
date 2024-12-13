@@ -235,7 +235,7 @@ const SupportPage: React.FC = () => {
       {getCurrentStep()?.image && (
         <div className="step-content__image">
           <Image 
-            src={getCurrentStep()?.image}
+            src={getCurrentStep()?.image || ''} // Add a fallback empty string
             alt={getCurrentStep()?.instruction || 'Troubleshooting step'}
             width={600}
             height={400}
