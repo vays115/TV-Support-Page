@@ -1,0 +1,17 @@
+.sidebar-item {
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    color: #374151;  /* text-gray-700 */
+  }
+  
+  .sidebar-item:hover {
+    background-color: #f9fafb;  /* gray-50 */
+  }
+  
+  .sidebar-item--selected {
+    background-color: #eff6ff;  /* blue-50 */
+    color: #2563eb;  /* blue-600 */
+  }

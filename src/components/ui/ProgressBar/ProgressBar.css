@@ -1,0 +1,21 @@
+.progress-bar {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .progress-bar__step {
+    height: 0.5rem;
+    flex: 1;
+    border-radius: 0.25rem;
+    background-color: #e5e7eb;  /* gray-200 */
+  }
+  
+  .progress-bar__step--complete {
+    background-color: #22c55e;  /* green-500 */
+  }
+  
+  .progress-bar__step--current {
+    background-color: #2563eb;  /* blue-500 */
+  }

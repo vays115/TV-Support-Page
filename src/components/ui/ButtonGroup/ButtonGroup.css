@@ -1,0 +1,10 @@
+.button-group {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 28rem;
+  }
+  
+  .button-group .button {
+    flex: 1;
+  }

@@ -1,0 +1,11 @@
+.step-indicator {
+    width: 2rem;
+    height: 2rem;
+    background-color: #2563eb; /* blue-600 */
+    color: white;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }

@@ -1,0 +1,29 @@
+.sidebar-category {
+    margin-bottom: 1rem;
+  }
+  
+  .sidebar-category__button {
+    width: 100%;
+    text-align: left;
+    font-weight: 600;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    color: #1f2937;  /* text-gray-800 */
+  }
+  
+  .sidebar-category__button:hover {
+    background-color: #f3f4f6;  /* gray-100 */
+  }
+  
+  .sidebar-category__button--selected {
+    background-color: #dbeafe;  /* blue-100 */
+    color: #2563eb;  /* blue-600 */
+  }
+  
+  .sidebar-category__content {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }

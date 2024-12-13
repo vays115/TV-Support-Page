@@ -1,0 +1,20 @@
+.sidebar {
+    width: 16rem;  /* w-64 */
+    background-color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar__header {
+    padding: 1rem;
+    background-color: #2563eb;  /* blue-600 */
+    color: white;
+  }
+  
+  .sidebar__header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  
+  .sidebar__nav {
+    padding: 1rem;
+  }

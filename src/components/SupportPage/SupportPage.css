@@ -1,0 +1,263 @@
+/* src/components/SupportPage/SupportPage.css */
+.support-page {
+    display: flex;
+    height: 100vh;
+    background-color: #f3f4f6;
+  }
+  
+  .support-page__content {
+    flex: 1;
+    padding: 2rem;
+    overflow: auto;
+  }
+  
+  .support-page__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .support-page__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+  }
+  
+  .header-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .support-page__empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #374151;
+  }
+  
+  .common-issues {
+    padding: 1rem 0;
+  }
+  
+  .common-issues__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+  }
+  
+  .common-issues__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .common-issue-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .common-issue-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+  
+  .common-issue-card__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  
+
+  .common-issue-card__symptoms {
+    margin-bottom: 1.5rem;
+  }
+  
+  .common-issue-card__symptoms h5 {
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+  
+  .common-issue-card__symptoms ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .common-issue-card__symptoms li {
+    color: #4b5563;
+    padding: 0.5rem 0;
+    padding-left: 1.75rem;
+    position: relative;
+  }
+
+  .common-issue-card__symptoms li:before {
+    content: "•";
+    color: #3b82f6;
+    font-weight: bold;
+    position: absolute;
+    left: 0.5rem;
+  }
+  
+  .common-issue-card__solution {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e5e7eb;  }
+  
+
+  .common-issue-card__solution p {
+    color: #4b5563;
+    line-height: 1.5;
+    }
+
+  .common-issue-card__solution h5 {
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .common-issue-card__button {
+    margin-top: 1.5rem;
+    width: 100%;
+  }
+  
+  .step-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .step-header__title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .step-header__issue-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .step-content {
+    padding: 1.5rem;
+  }
+  
+  .step-content__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .step-content__title {
+    margin-left: 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+
+  .step-content__container {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .step-content__info {
+    flex: 1;
+  }
+
+
+  
+  .step-content__body {
+    display: flex;
+    gap: 2rem;
+    margin-left: 2.75rem;
+  }
+
+  .step-content__text-section {
+    flex: 1;
+  }
+  
+  .step-content__details {
+    margin-bottom: 1rem;
+    color: #374151;
+  }
+  
+  .step-content__image {
+    flex: 1;
+    max-width: 50%;
+    margin: 0;  /* Remove previous margin */
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: #f3f4f6;
+  }
+  
+  .step-content__image-content {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  .step-content__question {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: #1f2937;
+  }
+  
+  .step-alert {
+    margin-top: 1rem;
+  }
+  
+  .step-alert__text {
+    font-weight: 500;
+  }
+  
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+  }
+  
+  .icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  .step-alert__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .step-alert__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #047857;  /* green-700 */
+  }
+  
+  .step-alert__text {
+    color: #065f46;  /* green-800 */
+  }
+  
+  .step-alert__actions {
+    margin-top: 0.5rem;
+  }
