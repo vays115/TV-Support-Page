@@ -18,7 +18,7 @@ export interface TroubleshootingStep {
   
   export interface Equipment {
     [key: string]: {
-      commonIssues: CommonIssue[];
+      commonIssues: Array<CommonIssue>;  // Explicitly define as array
     };
   }
   

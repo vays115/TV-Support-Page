@@ -6,12 +6,13 @@ export const getEquipmentData = (
   selectedEquipment: string | null
 ): Equipment | null => {
   if (!selectedSystem || !selectedEquipment) return null;
-  
+
   const equipment = troubleshootingData[selectedSystem]?.[selectedEquipment];
-  if (!equipment) return null;
+  if (!equipment || typeof equipment !== 'object') return null;
 
-  const keys = Object.keys(equipment);
+  const keys = Object.keys(equipment) as string[];
   if (!keys.length) return null;
-
-  return equipment[keys[0]];
+  
+  const firstKey = keys[0] as keyof typeof equipment;
+  return equipment[firstKey];
 };
