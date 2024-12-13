@@ -18,7 +18,7 @@ export interface TroubleshootingStep {
   }
   
   export interface Equipment {
-    [key: string]: {
+    [key: string]: {  
       commonIssues: CommonIssue[];
     };
   }
@@ -27,10 +27,5 @@ export interface TroubleshootingStep {
     [key: string]: Equipment;
   }
 
-  export interface CommonIssue {
-    title: string;
-    symptoms: string[];
-    quickSolution: string;
-    troubleshootingSteps: TroubleshootingStep[];
-  }
+
   

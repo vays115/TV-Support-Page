@@ -10,6 +10,7 @@ import ProgressBar from '@/components/ui/ProgressBar/ProgressBar';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import { TroubleshootingStep } from '@/types/troubleshooting';
 import { troubleshootingData } from '@/data/troubleshooting';
+import { getEquipmentData } from '@/utils/troubleshooting';
 import Image from 'next/image';
 import './SupportPage.css';
 import Sidebar from '@/components/ui/Sidebar/Sidebar';
@@ -37,6 +38,7 @@ const SupportPage: React.FC = () => {
     setStepResults([]);
     setSelectedIssue(null);
     setShowSteps(false);
+    setIsResolved(false);
   };
 
   const handleEquipmentSelect = (equipment: string) => {
@@ -48,44 +50,57 @@ const SupportPage: React.FC = () => {
     setIsResolved(false);
   };
 
-  const handleStepResponse = (isSuccess: boolean) => {
-    setStepResults([...stepResults, isSuccess]);
-    
-    if (selectedSystem && selectedEquipment && selectedIssue !== null) {
-      const currentStepData = troubleshootingData[selectedSystem][selectedEquipment]
-        .commonIssues[selectedIssue].troubleshootingSteps[currentStep];
-
-      if (isSuccess && currentStepData.resolvesIssue) {
-        setIsResolved(true);
-      }
-
-      
-      if (!isSuccess) {
-        if (currentStepData.nextStepOnFailure !== undefined) {
-          const nextStepIndex = troubleshootingData[selectedSystem][selectedEquipment]
-            .commonIssues[selectedIssue].troubleshootingSteps
-            .findIndex(step => step.step === currentStepData.nextStepOnFailure);
-          if (nextStepIndex !== -1) {
-            setCurrentStep(nextStepIndex);
-            return;
-          }
-        }
-        return;
-      }
-
-      if (currentStep < troubleshootingData[selectedSystem][selectedEquipment]
-        .commonIssues[selectedIssue].troubleshootingSteps.length - 1) {
-        setCurrentStep(currentStep + 1);
-      }
-    }
+  const getCommonIssues = () => {
+    const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
+    return equipmentData?.commonIssues || [];
   };
 
   const getCurrentStep = (): TroubleshootingStep | null => {
-    if (selectedSystem && selectedEquipment && selectedIssue !== null) {
-      return troubleshootingData[selectedSystem][selectedEquipment]
-        .commonIssues[selectedIssue].troubleshootingSteps[currentStep];
+    const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
+    if (!equipmentData || selectedIssue === null) return null;
+    
+    return equipmentData.commonIssues[selectedIssue]?.troubleshootingSteps[currentStep] || null;
+  };
+
+  const getCurrentIssueTitle = (): string => {
+    const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
+    if (!equipmentData || selectedIssue === null) return '';
+    
+    return equipmentData.commonIssues[selectedIssue]?.title || '';
+  };
+
+  const handleStepResponse = (isSuccess: boolean) => {
+    setStepResults([...stepResults, isSuccess]);
+    
+    const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
+    if (!equipmentData || selectedIssue === null) return;
+
+    const currentStepData = equipmentData.commonIssues[selectedIssue]?.troubleshootingSteps[currentStep];
+    if (!currentStepData) return;
+
+    if (isSuccess && currentStepData.resolvesIssue) {
+      setIsResolved(true);
+      return;
     }
-    return null;
+
+    if (!isSuccess) {
+      if (currentStepData.nextStepOnFailure !== undefined) {
+        const nextStepIndex = equipmentData.commonIssues[selectedIssue]
+          .troubleshootingSteps
+          .findIndex(step => step.step === currentStepData.nextStepOnFailure);
+        if (nextStepIndex !== -1) {
+          setCurrentStep(nextStepIndex);
+          return;
+        }
+      }
+      return;
+    }
+
+    const totalSteps = equipmentData.commonIssues[selectedIssue]
+      .troubleshootingSteps.length;
+    if (currentStep < totalSteps - 1) {
+      setCurrentStep(currentStep + 1);
+    }
   };
 
   const resetTroubleshooting = () => {
@@ -94,7 +109,6 @@ const SupportPage: React.FC = () => {
     setSelectedIssue(null);
     setShowSteps(false);
     setIsResolved(false);
-
   };
 
   return (
@@ -146,7 +160,7 @@ const SupportPage: React.FC = () => {
               <div className="common-issues">
                 <h3 className="common-issues__title">Common Issues</h3>
                 <div className="common-issues__grid">
-                  {troubleshootingData[selectedSystem][selectedEquipment].commonIssues.map((issue, index) => (
+                  {getCommonIssues().map((issue, index) => (
                     <Card key={index} className="common-issue-card">
                       <h4 className="common-issue-card__title">{issue.title}</h4>
                       <div className="common-issue-card__symptoms">
@@ -184,8 +198,7 @@ const SupportPage: React.FC = () => {
                     <div className="step-header">
                       <div className="step-header__title-section">
                         <h3 className="step-header__issue-title">
-                          {troubleshootingData[selectedSystem][selectedEquipment]
-                            .commonIssues[selectedIssue!].title}
+                          {getCurrentIssueTitle()}
                         </h3>
                         <Button
                           variant="outline"
@@ -199,53 +212,53 @@ const SupportPage: React.FC = () => {
                         </Button>
                       </div>
                       <Card>
-  <div className="step-content">
-    <div className="step-content__header">
-      <StepIndicator step={getCurrentStep()?.step || 0} />
-      <h4 className="step-content__title">
-        {getCurrentStep()?.instruction}
-      </h4>
-    </div>
-    <div className="step-content__container">
-      <div className="step-content__info">
-        <p className="step-content__details">
-          {getCurrentStep()?.details}
-        </p>
-        <p className="step-content__question">
-          {getCurrentStep()?.question}
-        </p>
-        <ButtonGroup>
-          <Button
-            onClick={() => handleStepResponse(true)}
-            variant="success"
-          >
-            <CheckCircle2 className="icon" />
-            Yes - Continue
-          </Button>
-          <Button
-            onClick={() => handleStepResponse(false)}
-            variant="danger"
-          >
-            <XCircle className="icon" />
-            No - Issue Found
-          </Button>
-        </ButtonGroup>
-      </div>
+                        <div className="step-content">
+                          <div className="step-content__header">
+                            <StepIndicator step={getCurrentStep()?.step || 0} />
+                            <h4 className="step-content__title">
+                              {getCurrentStep()?.instruction}
+                            </h4>
+                          </div>
+                          <div className="step-content__container">
+                            <div className="step-content__info">
+                              <p className="step-content__details">
+                                {getCurrentStep()?.details}
+                              </p>
+                              <p className="step-content__question">
+                                {getCurrentStep()?.question}
+                              </p>
+                              <ButtonGroup>
+                                <Button
+                                  onClick={() => handleStepResponse(true)}
+                                  variant="success"
+                                >
+                                  <CheckCircle2 className="icon" />
+                                  Yes - Continue
+                                </Button>
+                                <Button
+                                  onClick={() => handleStepResponse(false)}
+                                  variant="danger"
+                                >
+                                  <XCircle className="icon" />
+                                  No - Issue Found
+                                </Button>
+                              </ButtonGroup>
+                            </div>
 
-      {getCurrentStep()?.image && (
-        <div className="step-content__image">
-          <Image 
-            src={getCurrentStep()?.image || ''} // Add a fallback empty string
-            alt={getCurrentStep()?.instruction || 'Troubleshooting step'}
-            width={600}
-            height={400}
-            className="step-content__image-content"
-          />
-        </div>
-      )}
-    </div>
-  </div>
-</Card>
+                            {getCurrentStep()?.image && (
+                              <div className="step-content__image">
+                                <Image 
+                                  src={getCurrentStep()?.image || ''}
+                                  alt={getCurrentStep()?.instruction || 'Troubleshooting step'}
+                                  width={600}
+                                  height={400}
+                                  className="step-content__image-content"
+                                />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </Card>
                     </div>
 
                     {isResolved && (
@@ -273,11 +286,9 @@ const SupportPage: React.FC = () => {
                       </Alert>
                     )}
 
-
                     {selectedIssue !== null && (
                       <ProgressBar 
-                        steps={troubleshootingData[selectedSystem][selectedEquipment]
-                          .commonIssues[selectedIssue].troubleshootingSteps}
+                        steps={getCommonIssues()[selectedIssue]?.troubleshootingSteps || []}
                         currentStep={currentStep}
                         stepResults={stepResults}
                       />
@@ -292,8 +303,7 @@ const SupportPage: React.FC = () => {
                 <div className="modal-backdrop" onClick={() => setShowAllSteps(false)} />
                 <StepsOverview
                   steps={selectedIssue !== null 
-                    ? troubleshootingData[selectedSystem][selectedEquipment]
-                        .commonIssues[selectedIssue].troubleshootingSteps
+                    ? getCommonIssues()[selectedIssue]?.troubleshootingSteps || []
                     : []}
                   currentStep={currentStep}
                   onStepSelect={(step) => setCurrentStep(step)}
