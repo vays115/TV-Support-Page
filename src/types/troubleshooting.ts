@@ -9,7 +9,6 @@ export interface TroubleshootingStep {
   resolvesIssue?: boolean; // Add this to mark steps that resolve the issue
 }
 
-
   export interface CommonIssue {
     title: string;
     symptoms: string[];
@@ -18,7 +17,7 @@ export interface TroubleshootingStep {
   }
   
   export interface Equipment {
-    [key: string]: {  
+    [key: string]: {
       commonIssues: CommonIssue[];
     };
   }
