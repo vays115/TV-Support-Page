@@ -16,10 +16,8 @@ export interface TroubleshootingStep {
     troubleshootingSteps: TroubleshootingStep[];
   }
   
-export interface Equipment {
-  [key: string]: {
-    commonIssues: Array<CommonIssue>;  // Explicitly define as array
-  };
+  export interface Equipment {
+    commonIssues: CommonIssue[]; // Directly contains the array
 }
   
 export type SystemData = {

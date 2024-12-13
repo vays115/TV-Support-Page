@@ -8,9 +8,8 @@ import Card from '@/components/ui/Card/Card';
 import StepIndicator from '@/components/ui/StepIndicator/StepIndicator';
 import ProgressBar from '@/components/ui/ProgressBar/ProgressBar';
 import { CheckCircle2, XCircle } from 'lucide-react';
-import { TroubleshootingStep } from '@/types/troubleshooting';
+import { TroubleshootingStep, CommonIssue, Equipment, SystemData } from '@/types/troubleshooting';
 import { troubleshootingData } from '@/data/troubleshooting';
-import { getEquipmentData } from '@/utils/troubleshooting';
 import Image from 'next/image';
 import './SupportPage.css';
 import Sidebar from '@/components/ui/Sidebar/Sidebar';
@@ -18,105 +17,97 @@ import SidebarCategory from '@/components/ui/Sidebar/SidebarCategory';
 import SidebarItem from '@/components/ui/Sidebar/SidebarItem';
 import StepsOverview from '@/components/StepsOverview/StepsOverview';
 
-
+function getEquipmentData(
+    data: SystemData,
+    selectedSystem: string | null,
+    selectedEquipment: string | null
+): Equipment | null | undefined {
+    if (!selectedSystem || !selectedEquipment || !data[selectedSystem] || !data[selectedSystem][selectedEquipment]) {
+        return undefined;
+    }
+    return data[selectedSystem][selectedEquipment];
+}
 
 const SupportPage: React.FC = () => {
-  const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
-  const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
-  const [currentStep, setCurrentStep] = useState<number>(0);
-  const [stepResults, setStepResults] = useState<boolean[]>([]);
-  const [showAllSteps, setShowAllSteps] = useState(false);
-  const [selectedIssue, setSelectedIssue] = useState<number | null>(null);
-  const [showSteps, setShowSteps] = useState(false);
-  const [isResolved, setIsResolved] = useState(false);
+    const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
+    const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
+    const [currentStep, setCurrentStep] = useState<number>(0);
+    const [stepResults, setStepResults] = useState<boolean[]>([]);
+    const [showAllSteps, setShowAllSteps] = useState(false);
+    const [selectedIssue, setSelectedIssue] = useState<number | null>(null);
+    const [showSteps, setShowSteps] = useState(false);
+    const [isResolved, setIsResolved] = useState(false);
 
+    const handleSystemSelect = (system: string) => {
+        setSelectedSystem(system);
+        setSelectedEquipment(null);
+        resetTroubleshooting();
+    };
 
-  const handleSystemSelect = (system: string) => {
-    setSelectedSystem(system);
-    setSelectedEquipment(null);
-    setCurrentStep(0);
-    setStepResults([]);
-    setSelectedIssue(null);
-    setShowSteps(false);
-    setIsResolved(false);
-  };
+    const handleEquipmentSelect = (equipment: string) => {
+        setSelectedEquipment(equipment);
+        resetTroubleshooting();
+    };
 
-  const handleEquipmentSelect = (equipment: string) => {
-    setSelectedEquipment(equipment);
-    setCurrentStep(0);
-    setStepResults([]);
-    setSelectedIssue(null);
-    setShowSteps(false);
-    setIsResolved(false);
-  };
+    const getCommonIssues = (): CommonIssue[] => {
+        const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
+        return equipmentData?.commonIssues || [];
+    };
 
-  const getCommonIssues = () => {
-    const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
-    return equipmentData?.commonIssues || [];
-  };
-
-  
-
-  const getCurrentStep = (): TroubleshootingStep | null => {
-    const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
-    if (!equipmentData || selectedIssue === null || selectedIssue < 0 || selectedIssue >= equipmentData.commonIssues.length) {
-        return null;
-    }
-
-    const issue = equipmentData.commonIssues[selectedIssue];
-    return issue.troubleshootingSteps[currentStep] || null;
-};
-
-  const getCurrentIssueTitle = (): string => {
-    const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
-    if (!equipmentData || selectedIssue === null || selectedIssue < 0 || selectedIssue >= equipmentData.commonIssues.length) {
-        return '';
-    }
-
-    return equipmentData.commonIssues[selectedIssue]?.title || '';
-};
-
-  const handleStepResponse = (isSuccess: boolean) => {
-    setStepResults([...stepResults, isSuccess]);
-    
-    const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
-    if (!equipmentData || selectedIssue === null) return;
-
-    const currentStepData = equipmentData.commonIssues[selectedIssue]?.troubleshootingSteps[currentStep];
-    if (!currentStepData) return;
-
-    if (isSuccess && currentStepData.resolvesIssue) {
-      setIsResolved(true);
-      return;
-    }
-
-    if (!isSuccess) {
-      if (currentStepData.nextStepOnFailure !== undefined) {
-        const nextStepIndex = equipmentData.commonIssues[selectedIssue]
-          .troubleshootingSteps
-          .findIndex(step => step.step === currentStepData.nextStepOnFailure);
-        if (nextStepIndex !== -1) {
-          setCurrentStep(nextStepIndex);
-          return;
+    const getCurrentStep = (): TroubleshootingStep | null => {
+        const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
+        const issues = equipmentData?.commonIssues;
+        if (!issues || selectedIssue === null || selectedIssue < 0 || selectedIssue >= issues.length) {
+            return null;
         }
-      }
-      return;
-    }
+        return issues[selectedIssue].troubleshootingSteps[currentStep] || null;
+    };
 
-    const totalSteps = equipmentData.commonIssues[selectedIssue]
-      .troubleshootingSteps.length;
-    if (currentStep < totalSteps - 1) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
+    const getCurrentIssueTitle = (): string => {
+        const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
+        const issues = equipmentData?.commonIssues;
+        if (!issues || selectedIssue === null || selectedIssue < 0 || selectedIssue >= issues.length) {
+            return '';
+        }
+        return issues[selectedIssue].title || '';
+    };
 
-  const resetTroubleshooting = () => {
-    setCurrentStep(0);
-    setStepResults([]);
-    setSelectedIssue(null);
-    setShowSteps(false);
-    setIsResolved(false);
-  };
+    const handleStepResponse = (isSuccess: boolean) => {
+        setStepResults([...stepResults, isSuccess]);
+
+        const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
+        const issues = equipmentData?.commonIssues;
+        if (!issues || selectedIssue === null) return;
+
+        const currentStepData = issues[selectedIssue]?.troubleshootingSteps[currentStep];
+        if (!currentStepData) return;
+
+        if (isSuccess && currentStepData.resolvesIssue) {
+            setIsResolved(true);
+            return;
+        }
+
+        if (!isSuccess && currentStepData.nextStepOnFailure !== undefined) {
+            const nextStepIndex = issues[selectedIssue].troubleshootingSteps.findIndex(step => step.step === currentStepData.nextStepOnFailure);
+            if (nextStepIndex !== -1) {
+                setCurrentStep(nextStepIndex);
+                return;
+            }
+        }
+
+        const totalSteps = issues[selectedIssue].troubleshootingSteps.length;
+        if (currentStep < totalSteps - 1) {
+            setCurrentStep(currentStep + 1);
+        }
+    };
+
+    const resetTroubleshooting = () => {
+        setCurrentStep(0);
+        setStepResults([]);
+        setSelectedIssue(null);
+        setShowSteps(false);
+        setIsResolved(false);
+    };
 
   return (
     <div className="support-page">
