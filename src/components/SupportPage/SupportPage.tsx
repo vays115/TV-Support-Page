@@ -55,6 +55,8 @@ const SupportPage: React.FC = () => {
     return equipmentData?.commonIssues || [];
   };
 
+  
+
   const getCurrentStep = (): TroubleshootingStep | null => {
     const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
     if (!equipmentData || selectedIssue === null || selectedIssue < 0 || selectedIssue >= equipmentData.commonIssues.length) {

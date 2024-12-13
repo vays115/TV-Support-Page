@@ -1,7 +1,6 @@
 import { Equipment } from '@/types/troubleshooting';
 
 export const miniMods: Equipment = {
-  "Mini Mods Unit": {  // Add a key for the equipment
     commonIssues: [
       {
         title: "8 channels out in a row",
@@ -88,5 +87,4 @@ export const miniMods: Equipment = {
         ]
       }
     ]
-  }
-};
+  };

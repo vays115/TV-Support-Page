@@ -1,7 +1,6 @@
 import { Equipment } from '@/types/troubleshooting';
 
 export const NTSC8: Equipment = {
-  "NTSC8 Unit": { 
     commonIssues: [
       {
         title: "8 channels out in a row",
@@ -89,4 +88,3 @@ export const NTSC8: Equipment = {
       }
     ]
   }
-};

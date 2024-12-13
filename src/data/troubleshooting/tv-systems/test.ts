@@ -1,7 +1,6 @@
 import { Equipment } from '@/types/troubleshooting';
 
 export const testTVData: Equipment = {
-  "Testing Unit": { 
     commonIssues: [
       {
         title: "8 channels out in a row",
@@ -89,7 +88,7 @@ export const testTVData: Equipment = {
       }
     ]
   }
-};
+
 
 
 
