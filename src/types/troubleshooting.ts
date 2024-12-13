@@ -6,7 +6,7 @@ export interface TroubleshootingStep {
   failureAction: string;
   image?: string;
   nextStepOnFailure?: number; // goes to next step if troubleshooting step doesnt work
-  resolvesIssue?: boolean;  // Add this to mark steps that resolve the issue
+  resolvesIssue?: boolean; // Add this to mark steps that resolve the issue
 }
 
 
@@ -18,8 +18,10 @@ export interface TroubleshootingStep {
   }
   
   export interface Equipment {
-    commonIssues: CommonIssue[];
-}
+    [key: string]: {
+      commonIssues: CommonIssue[];
+    };
+  }
   
   export interface SystemData {
     [key: string]: Equipment;
