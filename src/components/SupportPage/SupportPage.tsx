@@ -30,7 +30,11 @@ function getEquipmentData(
     return data[selectedSystem][selectedEquipment];
 }
 
-const SupportPage: React.FC = () => {
+interface SupportPageProps {
+    dashboardContent?: React.ReactNode;
+  }
+
+const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
     const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
     const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
     const [currentStep, setCurrentStep] = useState<number>(0);
@@ -201,8 +205,12 @@ const SupportPage: React.FC = () => {
                       )}
                   </div>
               ) : (
-                  <div className="support-page__empty-state">
-                      Select a system and equipment type to begin troubleshooting
+
+                
+
+
+                  <div className="flex justify-center items-center h-full p-8">
+                      {dashboardContent}
                   </div>
               )}
           </main>

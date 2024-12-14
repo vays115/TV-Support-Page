@@ -1,9 +1,5 @@
-import SupportPage from '@/components/SupportPage/SupportPage';
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <main className="min-h-screen">
-      <SupportPage />
-    </main>
-  );
+  redirect('/main');
 }
