@@ -7,6 +7,7 @@ export interface TroubleshootingStep {
   image?: string;
   nextStepOnFailure?: number; // goes to next step if troubleshooting step doesnt work
   resolvesIssue?: boolean; // Add this to mark steps that resolve the issue
+  successMessage?: string; //add this for custom success messages
 }
 
   export interface CommonIssue {

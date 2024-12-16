@@ -13,7 +13,6 @@ import StepsOverview from '@/components/StepsOverview/StepsOverview';
 import CommonIssuesList from '@/components/CommonIssuesList/CommonIssuesList';
 import TroubleshootingStepComponent from '@/components/TroubleshootingStep/TroubleshootingStep';
 import PageHeader from '@/components/PageHeader/PageHeader';
-import ResolvedAlert from '@/components/ResolvedAlert/ResolvedAlert';
 import { useTroubleshooting } from '@/hooks/useTroubleshooting';
 import Alert from '../ui/Alert/Alert';
 
@@ -178,16 +177,30 @@ const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
                                       </div>
 
                                       {isResolved && (
-                                        <ResolvedAlert
-                                          onBackToIssues={() => {
-                                            setShowSteps(false);
-                                            setSelectedIssue(null);
-                                            setIsResolved(false);
-                                            setCurrentStep(0);
-                                            setStepResults([]);
-                                          }}
-                                        />
-                                      )}
+  <Alert variant="success" className="step-alert">
+    <div className="step-alert__content">
+      <h4 className="step-alert__title">Issue Resolved!</h4>
+      <p className="step-alert__text">
+        {getCurrentStep()?.successMessage || 
+         "The issue has been successfully resolved. You can return to the common issues list or select another issue to troubleshoot."}
+      </p>
+      <div className="step-alert__actions">
+        <Button
+          variant="outline"
+          onClick={() => {
+            setShowSteps(false);
+            setSelectedIssue(null);
+            setIsResolved(false);
+            setCurrentStep(0);
+            setStepResults([]);
+          }}
+        >
+          Back to Issues
+        </Button>
+      </div>
+    </div>
+  </Alert>
+)}
 
                                       {selectedIssue !== null && (
                                           <ProgressBar

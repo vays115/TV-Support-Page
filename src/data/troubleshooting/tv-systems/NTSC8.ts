@@ -20,7 +20,8 @@ export const NTSC8: Equipment = {
           failureAction: "2 Possible issue, dead unit or bad power cable.",
           image: "https://clnproduction.s3.amazonaws.com/photoAlbums/Tes/f5770e41eb59459ab7540b815e52a170a0f91cc0b97411efbe932dfa57685a32.png",
           nextStepOnFailure: 2,
-          resolvesIssue: true // This is true if power cycling fixes the issue
+          resolvesIssue: true, // This is true if power cycling fixes the issue
+          successMessage: "Post this message in the case: NTS8 unit was power cycled to restore channels",
         },
         {
           step: 2,
@@ -83,44 +84,24 @@ export const NTSC8: Equipment = {
         },
         {
           step: 2,
-          instruction: "Check Connections",
-          details: "Check all cable connections to the affected NTSC8 unit(s), including the coaxial cable/power cable. And power cycle the affected unit",
-          question: "Did channels come back up?",
-          failureAction: "Try reseating or replacing the cables and power cycling the units again. If the problem persists, proceed to the next step.",
-          image: "", // Add image of cable connections if possible
+          instruction: "Idenfity where missing channels are ",
+          details: "Ask staff member to see if issues are happening at the headend tv",
+          question: "Is issue isolated at the headend?",
+          failureAction: "",
+          image: "", 
           nextStepOnFailure: 3,
-          resolvesIssue: true
+          resolvesIssue: false
         },
         {
           step: 3,
-          instruction: "Get remote access",
-          details: "Get remote access to the COM.",
-          question: "Do we have remote access?",
-          failureAction: "Proceed to next step.",
-          image: "https://clnproduction.s3.amazonaws.com/photoAlbums/Tes/f5770e41eb59459ab7540b815e52a170a0f91cc0b97411efbe932dfa57685a32.png", 
-          nextStepOnFailure: 4,
-          resolvesIssue: true
-        },
-        {
-          step: 4,
-          instruction: "Check COM400 Port Status (Advanced)",
-          details: "If the issue persists, check the link status of the COM400 port connected to the affected NTSC8 unit. A red light indicates a problem. Contact Tier 2/DIRECTV for assistance with the COM400 system.",
-          question: "Is the COM400 port showing a green (working) status?",
-          failureAction: "Escalate to Tier 2/DIRECTV for assistance with COM400 diagnostics.",
-          image: "", // Add image of COM400 port if available
+          instruction: "Is issue happening at the whole facility?",
+          details: "Confirm with staff if issue happening at the entire facility",
+          question: "Is issue at the whole facility?",
+          failureAction: "If its at a part of the facility it could be an amp issue",
+          image: "", 
           resolvesIssue: false
         },
-                {
-          step: 5,
-          instruction: "Escalate to Tier 2/DIRECTV",
-          details: "If the issue persists after trying all the above steps, escalate the issue to Tier 2 support or DIRECTV directly. There might be a signal issue, COM3000 system problem, or other issue requiring advanced diagnostics.",
-          question: "",
-          failureAction: "Document all troubleshooting steps taken and provide details to Tier 2/DIRECTV.",
-          image: "",
-          resolvesIssue: false
-        }
       ]
-    }
+    },
   ]
-
 }
