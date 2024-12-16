@@ -9,5 +9,5 @@ import { generalSystem } from './general';
 export const troubleshootingData: SystemData = {
   "General": generalSystem,
   "COM System": tvSystems,
-  "Mini Mod Systems": miniModsSystem,
+  "Receiver Based Systems": miniModsSystem,
 };
