@@ -17,7 +17,7 @@ export const NTSC8: Equipment = {
           instruction: "Identify the faulty NTSC8 unit.",
           details: "Ask staff to identify the NTSC8 unit with no lights. Have them power cycle it by unplugging the power cord for 10 seconds and plugging it back in.",
           question: "Is the NTSC8 unit powered on (green status lights) and are the channels back up?",
-          failureAction: "Proceed to next step.",
+          failureAction: "2 Possible issue, dead unit or bad power cable.",
           image: "https://clnproduction.s3.amazonaws.com/photoAlbums/Tes/f5770e41eb59459ab7540b815e52a170a0f91cc0b97411efbe932dfa57685a32.png",
           nextStepOnFailure: 2,
           resolvesIssue: true // This is true if power cycling fixes the issue
@@ -46,10 +46,10 @@ export const NTSC8: Equipment = {
           step: 4,
           instruction: "Move the working power cable back to the original unit",
           details: "We have a bad power cable, escalate the case to Tier 2 for replacement power cable. And confirm that staff moved the working power cable back to the working unit",
-          question: "",
-          failureAction: "",
+          question: "Is channels back up?",
+          failureAction: "Go back and troubleshoot missing channels ",
           image: "https://clnproduction.s3.amazonaws.com/photoAlbums/Tes/f5770e41eb59459ab7540b815e52a170a0f91cc0b97411efbe932dfa57685a32.png", 
-          nextStepOnFailure: 4,
+          nextStepOnFailure: 5,
           resolvesIssue: true
         },
         {
@@ -75,27 +75,27 @@ export const NTSC8: Equipment = {
         {
           step: 1,
           instruction: "Identify the affected channels and NTSC8 unit(s).",
-          details: "Ask staff which channels are affected and in which rooms/locations. Determine the corresponding NTSC8 unit(s).",
+          details: "Ask staff which channels are affected and determine the corresponding NTSC8 unit(s) the channels belong to.",
           question: "Have the affected channels and NTSC8 unit(s) been identified?",
-          failureAction: "",
+          failureAction: "Check the lineup and ask the staff member to check the units to see if there's any red lights on any of the NTSC8 units",
           image: "",
           resolvesIssue: false
         },
         {
           step: 2,
           instruction: "Check Connections",
-          details: "Check all cable connections to the affected NTSC8 unit(s), including the coaxial cable from the COM400 module and the output to the TV. Ensure they are secure and undamaged.",
-          question: "Are all connections secure and undamaged?",
-          failureAction: "Try reseating or replacing the cables. If the problem persists, proceed to the next step.",
+          details: "Check all cable connections to the affected NTSC8 unit(s), including the coaxial cable/power cable. And power cycle the affected unit",
+          question: "Did channels come back up?",
+          failureAction: "Try reseating or replacing the cables and power cycling the units again. If the problem persists, proceed to the next step.",
           image: "", // Add image of cable connections if possible
           nextStepOnFailure: 3,
-          resolvesIssue: false
+          resolvesIssue: true
         },
         {
           step: 3,
-          instruction: "Power Cycle Affected NTSC8 Unit(s)",
-          details: "Unplug the power cord of the affected NTSC8 unit(s) for 10 seconds and plug it back in.",
-          question: "Have the channels returned after power cycling?",
+          instruction: "Get remote access",
+          details: "Get remote access to the COM.",
+          question: "Do we have remote access?",
           failureAction: "Proceed to next step.",
           image: "https://clnproduction.s3.amazonaws.com/photoAlbums/Tes/f5770e41eb59459ab7540b815e52a170a0f91cc0b97411efbe932dfa57685a32.png", 
           nextStepOnFailure: 4,

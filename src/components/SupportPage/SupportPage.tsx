@@ -15,6 +15,7 @@ import TroubleshootingStepComponent from '@/components/TroubleshootingStep/Troub
 import PageHeader from '@/components/PageHeader/PageHeader';
 import ResolvedAlert from '@/components/ResolvedAlert/ResolvedAlert';
 import { useTroubleshooting } from '@/hooks/useTroubleshooting';
+import Alert from '../ui/Alert/Alert';
 
 
 
@@ -43,6 +44,9 @@ const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
     const [selectedIssue, setSelectedIssue] = useState<number | null>(null);
     const [showSteps, setShowSteps] = useState(false);
     const [isResolved, setIsResolved] = useState(false);
+    const [showFailureAction, setShowFailureAction] = useState(false);
+    
+
 
     const handleSystemSelect = (system: string) => {
         setSelectedSystem(system);
@@ -62,34 +66,40 @@ const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
       currentStep
   );
 
-    const handleStepResponse = (isSuccess: boolean) => {
-        setStepResults([...stepResults, isSuccess]);
-
-        const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
-        const issues = equipmentData?.commonIssues;
-        if (!issues || selectedIssue === null) return;
-
-        const currentStepData = issues[selectedIssue]?.troubleshootingSteps[currentStep];
-        if (!currentStepData) return;
-
-        if (isSuccess && currentStepData.resolvesIssue) {
-            setIsResolved(true);
-            return;
-        }
-
-        if (!isSuccess && currentStepData.nextStepOnFailure !== undefined) {
-            const nextStepIndex = issues[selectedIssue].troubleshootingSteps.findIndex(step => step.step === currentStepData.nextStepOnFailure);
-            if (nextStepIndex !== -1) {
-                setCurrentStep(nextStepIndex);
-                return;
-            }
-        }
-
-        const totalSteps = issues[selectedIssue].troubleshootingSteps.length;
-        if (currentStep < totalSteps - 1) {
-            setCurrentStep(currentStep + 1);
-        }
-    };
+  const handleStepResponse = (isSuccess: boolean) => {
+    setStepResults([...stepResults, isSuccess]);
+    const equipmentData = getEquipmentData(troubleshootingData, selectedSystem, selectedEquipment);
+    const issues = equipmentData?.commonIssues;
+    if (!issues || selectedIssue === null) return;
+ 
+    const currentStepData = issues[selectedIssue]?.troubleshootingSteps[currentStep];
+    if (!currentStepData) return;
+ 
+    if (!isSuccess) {
+        setShowFailureAction(true);
+        return;
+    }
+ 
+    setShowFailureAction(false);
+ 
+    if (currentStepData.resolvesIssue) {
+        setIsResolved(true);
+        return;
+    }
+ 
+    if (currentStep < issues[selectedIssue].troubleshootingSteps.length - 1) {
+        setCurrentStep(currentStep + 1);
+    }
+ };
+ 
+ const handleNextFailureStep = () => {
+    const currentStepData = getCurrentStep();
+    if (currentStepData?.nextStepOnFailure) {
+        setShowFailureAction(false);
+        setCurrentStep(currentStepData.nextStepOnFailure - 1);
+    }
+ };
+  
 
     const resetTroubleshooting = () => {
         setCurrentStep(0);
@@ -97,6 +107,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
         setSelectedIssue(null);
         setShowSteps(false);
         setIsResolved(false);
+        setShowFailureAction(false);
     };
 
     return (
@@ -189,6 +200,17 @@ const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
                               )}
                           </div>
                       )}
+
+{showFailureAction && (
+  <Alert variant="error" className="step-alert">
+    <p className="step-alert__text">
+      Recommended Action: {getCurrentStep()?.failureAction}
+    </p>
+    <Button onClick={handleNextFailureStep} variant="outline" className="mt-4">
+      Continue to Next Step
+    </Button>
+  </Alert>
+)}
 
                       {showAllSteps && (
                           <>

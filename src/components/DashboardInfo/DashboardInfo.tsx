@@ -11,14 +11,9 @@ interface Alert {
 const mockAlerts: Alert[] = [
   {
     id: '1',
-    message: 'Scheduled maintenance for NTSC-8 units tonight at 2AM EST',
+    message: 'Updates on the way',
     priority: 'high'
   },
-  {
-    id: '2',
-    message: 'New troubleshooting guide available for Mini Mods',
-    priority: 'low'
-  }
 ];
 
 const DashboardInfo = () => {
