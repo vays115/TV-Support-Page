@@ -58,7 +58,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
         resetTroubleshooting();
     };
 
-    const { getCommonIssues, getCurrentStep, getCurrentIssueTitle } = useTroubleshooting(
+    const { getCommonIssues, getCurrentStep, } = useTroubleshooting(
       selectedSystem,
       selectedEquipment,
       selectedIssue,
@@ -155,21 +155,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
                               {getCurrentStep() && (
                                   <div>
                                       <div className="step-header">
-                                          <div className="step-header__title-section">
-                                              <h3 className="step-header__issue-title">
-                                                  {getCurrentIssueTitle()}
-                                              </h3>
-                                              <Button
-                                                  variant="outline"
-                                                  onClick={() => {
-                                                      setShowSteps(false);
-                                                      setSelectedIssue(null);
-                                                  }}
-                                                  className="step-header__back-button"
-                                              >
-                                                  Back to Issues
-                                              </Button>
-                                          </div>
+                                         
                                           <TroubleshootingStepComponent
                                               step={getCurrentStep()!}
                                               onResponse={handleStepResponse}
@@ -184,20 +170,6 @@ const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
         {getCurrentStep()?.successMessage || 
          "The issue has been successfully resolved. You can return to the common issues list or select another issue to troubleshoot."}
       </p>
-      <div className="step-alert__actions">
-        <Button
-          variant="outline"
-          onClick={() => {
-            setShowSteps(false);
-            setSelectedIssue(null);
-            setIsResolved(false);
-            setCurrentStep(0);
-            setStepResults([]);
-          }}
-        >
-          Back to Issues
-        </Button>
-      </div>
     </div>
   </Alert>
 )}
