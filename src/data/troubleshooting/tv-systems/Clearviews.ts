@@ -20,7 +20,7 @@ export const Clearviews: Equipment = {
           failureAction: "2 Possible issue, dead unit or bad power cable.",
           image: "",
           nextStepOnFailure: 2,
-          resolvesIssue: true, // This is true if power cycling fixes the issue
+          resolvesIssue: true, 
           successMessage: "Post this message in the case: Clearview unit was power cycled to restore channels",
         },
         {

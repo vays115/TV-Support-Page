@@ -61,7 +61,8 @@ export const NTSC8: Equipment = {
           failureAction: "Document the issue and escalate to Tier 2/DIRECTV.",
           image: "",
           resolvesIssue: false
-        }
+        },
+        
       ]
     },
     {
