@@ -1,25 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
-interface Alert {
-  id: string;
-  message: string;
-  priority: 'high' | 'medium' | 'low';
-}
-
-const mockAlerts: Alert[] = [
-  {
-    id: '1',
-    message: "DON'T LET CLIENTS KNOW OF TECH RATES",
-    priority: 'high'
-  },
-  {
-    id: '2',
-    message: "Issues around NTSC32 with closed captioning or audio issues due to firmware",
-    priority: 'high'
-  },
-];
+import { mockAlerts } from '@/data/dashboard/alerts';
 
 const DashboardInfo = () => {
   const [time, setTime] = useState(new Date());
