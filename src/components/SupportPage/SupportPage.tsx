@@ -37,17 +37,15 @@ interface SupportPageProps {
 }
 
 const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
-  const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
-  const [selectedEquipment, setSelectedEquipment] = useState<string | null>(
-    null
-  );
-  const [currentStep, setCurrentStep] = useState<number>(0);
-  const [stepResults, setStepResults] = useState<boolean[]>([]);
-  const [showAllSteps, setShowAllSteps] = useState(false);
-  const [selectedIssue, setSelectedIssue] = useState<number | null>(null);
-  const [showSteps, setShowSteps] = useState(false);
-  const [isResolved, setIsResolved] = useState(false);
-  const [showFailureAction, setShowFailureAction] = useState(false);
+    const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
+    const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
+    const [currentStep, setCurrentStep] = useState<number>(0);
+    const [stepResults, setStepResults] = useState<boolean[]>([]);
+    const [showAllSteps, setShowAllSteps] = useState(false);
+    const [selectedIssue, setSelectedIssue] = useState<number | null>(null);
+    const [showSteps, setShowSteps] = useState(false);
+    const [isResolved, setIsResolved] = useState(false);
+    const [showFailureAction, setShowFailureAction] = useState(false);
 
   const handleSystemSelect = (system: string) => {
     setSelectedSystem(system);
