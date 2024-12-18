@@ -3,7 +3,7 @@ import { Alert } from '@/types/dashboard';
 export const mockAlerts: Alert[] = [
   {
     id: '1',
-    message: "DON'T LET CLIENTS KNOW OF TECH RATES",
+    message: "Tech rates are disclosed only at tier 2 support",
     priority: 'high'
   },
   {
