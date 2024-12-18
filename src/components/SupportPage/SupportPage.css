@@ -174,6 +174,7 @@
   .step-content__container {
     display: flex;
     gap: 2rem;
+    align-items: flex-start;
   }
   
   .step-content__info {
@@ -199,8 +200,8 @@
   
   .step-content__image {
     flex: 1;
-    max-width: 50%;
-    margin: 0;  /* Remove previous margin */
+    max-width: 800px; /* Fixed width */
+    height: 400px;    /* Fixed height */
     border-radius: 0.5rem;
     overflow: hidden;
     background-color: #f3f4f6;
@@ -208,8 +209,8 @@
   
   .step-content__image-content {
     width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: 100%;
+    object-fit: contain; /* This will make the image fit while maintaining aspect ratio */
   }
   
   .step-content__question {
@@ -260,4 +261,42 @@
   
   .step-alert__actions {
     margin-top: 0.5rem;
+  }
+
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
+  }
+  
+  .lightbox__content {
+    max-width: 90vw;
+    max-height: 90vh;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  .lightbox__image {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(90vh - 2rem);
+    object-fit: contain;
+  }
+  
+  .step-content__image {
+    transition: transform 0.2s;
+  }
+  
+  .step-content__image:hover {
+    transform: scale(1.02);
   }

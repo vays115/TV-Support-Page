@@ -217,7 +217,10 @@ const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
                       : []
                   }
                   currentStep={currentStep}
-                  onStepSelect={(step) => setCurrentStep(step)}
+                  onStepSelect={(step) => {
+                    setCurrentStep(step);
+                    setShowFailureAction(false);
+                    }}
                   onClose={() => setShowAllSteps(false)}
                 />
               </>

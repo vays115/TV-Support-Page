@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from "react";
 import Image from 'next/image';
 import Button from '@/components/ui/Button/Button';
 import ButtonGroup from '@/components/ui/ButtonGroup/ButtonGroup';
@@ -12,43 +13,70 @@ interface TroubleshootingStepProps {
   onResponse: (isSuccess: boolean) => void;
 }
 
-const TroubleshootingStep: React.FC<TroubleshootingStepProps> = ({ step, onResponse }) => (
-  <Card>
-    <div className="step-content">
-      <div className="step-content__header">
-        <StepIndicator step={step.step} />
-        <h4 className="step-content__title">{step.instruction}</h4>
-      </div>
-      <div className="step-content__container">
-        <div className="step-content__info">
-          <p className="step-content__details">{step.details}</p>
-          <p className="step-content__question">{step.question}</p>
-          <ButtonGroup>
-            <Button onClick={() => onResponse(true)} variant="success">
-              <CheckCircle2 className="icon" />
-              Yes - Continue
-            </Button>
-            <Button onClick={() => onResponse(false)} variant="danger">
-              <XCircle className="icon" />
-              No - Issue Found
-            </Button>
-          </ButtonGroup>
+const TroubleshootingStep: React.FC<TroubleshootingStepProps> = ({ step, onResponse }) => {
+  const [showLightbox, setShowLightbox] = useState(false);
+
+  return (
+    <Card>
+      <div className="step-content">
+        <div className="step-content__header">
+          <StepIndicator step={step.step} />
+          <h4 className="step-content__title">{step.instruction}</h4>
         </div>
-        {step.image && (
-          <div className="step-content__image">
-            <Image 
-              src={step.image}
-              alt={step.instruction || 'Troubleshooting step'}
-              width={600}
-              height={400}
-              className="step-content__image-content"
-            />
+        <div className="step-content__container">
+          <div className="step-content__info">
+            <p className="step-content__details">{step.details}</p>
+            <p className="step-content__question">{step.question}</p>
+            <ButtonGroup>
+              <Button onClick={() => onResponse(true)} variant="success">
+                <CheckCircle2 className="icon" />
+                Yes - Continue
+              </Button>
+              <Button onClick={() => onResponse(false)} variant="danger">
+                <XCircle className="icon" />
+                No - Issue Found
+              </Button>
+            </ButtonGroup>
           </div>
-        )}
+          {step.image && (
+            <>
+              <div 
+                className="step-content__image"
+                onClick={() => setShowLightbox(true)}
+                style={{ cursor: 'pointer' }}
+              >
+                <Image 
+                  src={step.image}
+                  alt={step.instruction || 'Troubleshooting step'}
+                  width={400}
+                  height={250}
+                  className="step-content__image-content"
+                />
+              </div>
+              {showLightbox && (
+                <div 
+                  className="lightbox"
+                  onClick={() => setShowLightbox(false)}
+                >
+                  <div className="lightbox__content">
+                    <Image 
+                      src={step.image}
+                      alt={step.instruction || 'Troubleshooting step'}
+                      width={1200}
+                      height={800}
+                      className="lightbox__image"
+                    />
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
-  </Card>
-);
+    </Card>
+  );
+};
+
 
 export default TroubleshootingStep;
   
