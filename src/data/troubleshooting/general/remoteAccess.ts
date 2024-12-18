@@ -3,14 +3,11 @@ import { Equipment } from '@/types/troubleshooting';
 export const remoteAccess: Equipment = {
     commonIssues: [
       {
-        title: "Getting Remote Access",
+        title: "Visium Set Top Box Set Up",
         symptoms: [
-          "Get access to the COM",
-          "Get access to the Clearview",
-          "Get access to the NTSC Units",
-          "Get access to the AQT8",
+
         ],
-        quickSolution: "Power Cycle the Remote Access Comp",
+        quickSolution: "",
         troubleshootingSteps: [
             {
                 "step": 1,
@@ -39,7 +36,7 @@ export const remoteAccess: Equipment = {
                 "instruction": "Find Comp at the headend",
                 "details": "Ask staff member to identify the remote access comp, messagenow, or guidenow on the headend",
                 "question": "Were you able to find the remote access comp and login successfully?",
-                "failureAction": "Lets troubleshoot the DLink and Switch",
+                "failureAction": "Lets troubleshoot the comp and the switch/router. Or skip to step 4 for troubleshooting the comp and the switch/router",
                 "image": "https://clnproduction.s3.amazonaws.com/photoAlbums/Tes/85d4a4661e28452a8ae7f6e37b41ab5ed68def20bd6411ef83b495f6a0c0f853.png",
                 "nextStepOnFailure": 4,
                 "resolvesIssue": true,
@@ -51,7 +48,7 @@ export const remoteAccess: Equipment = {
                 "details": "Confirm with a staff member if the remote access computer has a blue, red, or no light on the power button.",
                 "question": "Ask if light is blue, red, or no light. Blue light = Step 5 click yes, Red light = Step 6, No light = Step 7",
                 "failureAction": "Proceed to the relevant step below based on light status.",
-                "image": "https://clnproduction.s3.amazonaws.com/photoAlbums/Tes/df84c38a01ae4221aa0a457d0f7b642d801296f0bd5011efaeef917b1f500685.png",
+                "image": "https://clnproduction.s3.amazonaws.com/photoAlbums/Tes/74218e6550ff474c9ce601f4f8c8be75f1b01400bd9511ef8fe1574b898f7cdb.png",
                 "nextStepOnFailure": 5,
                 "resolvesIssue": false,
                 "successMessage": "The computer is now powered on. Refresh LogMeIn to check if it's back up."
