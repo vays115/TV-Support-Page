@@ -5,20 +5,20 @@ export interface TroubleshootingStep {
   question: string;
   failureAction: string;
   image?: string;
-  nextStepOnFailure?: number; // goes to next step if troubleshooting step doesnt work
-  resolvesIssue?: boolean; // Add this to mark steps that resolve the issue
-  successMessage?: string; //add this for custom success messages
+  nextStepOnFailure?: number;
+  resolvesIssue?: boolean;
+  successMessage?: string;
 }
 
-  export interface CommonIssue {
-    title: string;
-    symptoms: string[];
-    quickSolution: string;
-    troubleshootingSteps: TroubleshootingStep[];
-  }
-  
-  export interface Equipment {
-    commonIssues: CommonIssue[]; // Directly contains the array
+export interface CommonIssue {
+  title: string;
+  symptoms: string[];
+  quickSolution: string;
+  troubleshootingSteps: TroubleshootingStep[];
+}
+
+export interface Equipment {
+  commonIssues: CommonIssue[];
 }
   
 export type SystemData = {

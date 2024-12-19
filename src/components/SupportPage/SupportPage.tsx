@@ -15,6 +15,7 @@ import TroubleshootingStepComponent from "@/components/TroubleshootingStep/Troub
 import PageHeader from "@/components/PageHeader/PageHeader";
 import { useTroubleshooting } from "@/hooks/useTroubleshooting";
 import Alert from "../ui/Alert/Alert";
+import { useRouter } from "next/navigation"; // Changed this line
 
 function getEquipmentData(
   data: SystemData,
@@ -34,11 +35,18 @@ function getEquipmentData(
 
 interface SupportPageProps {
   dashboardContent?: React.ReactNode;
+  defaultSystem?: string;
+  defaultEquipment?: string
 }
 
-const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
-    const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
-    const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
+const SupportPage: React.FC<SupportPageProps> = ({ 
+  dashboardContent, 
+  defaultSystem,
+  defaultEquipment 
+}) => {
+  const router = useRouter();
+  const [selectedSystem, setSelectedSystem] = useState<string | null>(defaultSystem || null);
+  const [selectedEquipment, setSelectedEquipment] = useState<string | null>(defaultEquipment || null);
     const [currentStep, setCurrentStep] = useState<number>(0);
     const [stepResults, setStepResults] = useState<boolean[]>([]);
     const [showAllSteps, setShowAllSteps] = useState(false);
@@ -47,16 +55,20 @@ const SupportPage: React.FC<SupportPageProps> = ({ dashboardContent }) => {
     const [isResolved, setIsResolved] = useState(false);
     const [showFailureAction, setShowFailureAction] = useState(false);
 
-  const handleSystemSelect = (system: string) => {
-    setSelectedSystem(system);
-    setSelectedEquipment(null);
-    resetTroubleshooting();
-  };
+    const handleSystemSelect = (system: string) => {
+      setSelectedSystem(system);
+      setSelectedEquipment(null);
+      resetTroubleshooting();
+      router.push(`/${encodeURIComponent(system)}`);
+    };
 
-  const handleEquipmentSelect = (equipment: string) => {
-    setSelectedEquipment(equipment);
-    resetTroubleshooting();
-  };
+    const handleEquipmentSelect = (equipment: string) => {
+      setSelectedEquipment(equipment);
+      resetTroubleshooting();
+      if (selectedSystem) {
+        router.push(`/${encodeURIComponent(selectedSystem)}/${encodeURIComponent(equipment)}`);
+      }
+    };
 
   const { getCommonIssues, getCurrentStep } = useTroubleshooting(
     selectedSystem,
