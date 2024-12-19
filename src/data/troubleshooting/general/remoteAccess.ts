@@ -5,9 +5,12 @@ export const remoteAccess: Equipment = {
       {
         title: "Gaining Remote Access to the Headend",
         symptoms: [
-            "",
+          "Get access to the COM",
+          "Get access to the Clearview",
+          "Get access to the NTSC Units",
+          "Get access to the AQT8",
         ],
-        quickSolution: "",
+        quickSolution: "Power Cycle the Remote Access Comp",
         troubleshootingSteps: [
             {
                 "step": 1,
