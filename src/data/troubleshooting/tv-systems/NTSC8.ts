@@ -65,44 +65,46 @@ export const NTSC8: Equipment = {
         
       ]
     },
-    {
-      title: "Sporadic Missing Channels/Sound Issues (Potentially Signal Related)",
-      symptoms: [
-        "Intermittent missing channels",
-        "Sound issues (static, no sound)",
-        "Pixelation or freezing on some channels"
-      ],
-      quickSolution: "Power cycle the affected NTSC8 unit and check all connections.",
-      troubleshootingSteps: [
-        {
-          step: 1,
-          instruction: "Identify the affected channels and NTSC8 unit(s).",
-          details: "Ask staff which channels are affected and determine the corresponding NTSC8 unit(s) the channels belong to.",
-          question: "Have the affected channels and NTSC8 unit(s) been identified?",
-          failureAction: "Check the lineup and ask the staff member to check the units to see if there's any red lights on any of the NTSC8 units",
-          image: "",
-          resolvesIssue: false
-        },
-        {
-          step: 2,
-          instruction: "Idenfity where missing channels are ",
-          details: "Ask staff member to see if issues are happening at the headend tv",
-          question: "Is issue isolated at the headend?",
-          failureAction: "",
-          image: "", 
-          nextStepOnFailure: 3,
-          resolvesIssue: false
-        },
-        {
-          step: 3,
-          instruction: "Is issue happening at the whole facility?",
-          details: "Confirm with staff if issue happening at the entire facility",
-          question: "Is issue at the whole facility?",
-          failureAction: "If its at a part of the facility it could be an amp issue",
-          image: "", 
-          resolvesIssue: false
-        },
-      ]
-    },
+    // {
+    //   title: "TO DO:Sporadic Missing Channels/Sound Issues (Potentially Signal Related)",
+    //   symptoms: [
+    //     "Intermittent missing channels",
+    //     "Sound issues (static, no sound)",
+    //     "Pixelation or freezing on some channels"
+    //   ],
+    //   quickSolution: "Power cycle the affected NTSC8 unit and check all connections.",
+    //   troubleshootingSteps: [
+    //     {
+    //       step: 1,
+    //       instruction: "Identify the affected channels and NTSC8 unit(s).",
+    //       details: "Ask staff which channels are affected and determine the corresponding NTSC8 unit(s) the channels belong to and power cycle the unit",
+    //       question: "Have the affected channels and NTSC8 unit(s) been identified,power cycled, and channels back up?",
+    //       failureAction: "Check the lineup and ask the staff member to check the units to see if there's any red lights on any of the NTSC8 units",
+    //       image: "",
+    //       nextStepOnFailure: 2,
+    //       resolvesIssue: true, 
+    //       successMessage: "Post this message in the case: NTS8 unit was power cycled to restore channels",
+    //     },
+    //     {
+    //       step: 2,
+    //       instruction: "Identify Where Issue is Happening",
+    //       details: "Ask staff if the missing channels are at the headend TV or outside the headend/MDF/IDF",
+    //       question: "Is issue isolated at the headend?",
+    //       failureAction: "",
+    //       image: "", 
+    //       nextStepOnFailure: 3,
+    //       resolvesIssue: false
+    //     },
+    //     {
+    //       step: 3,
+    //       instruction: "Is issue happening at the whole facility or just a section?",
+    //       details: "Confirm with staff if issue happening at the entire facility",
+    //       question: "Is issue at the whole facility?",
+    //       failureAction: "If its at a part of the facility it could be an amp issue",
+    //       image: "", 
+    //       resolvesIssue: false
+    //     },
+    //   ]
+    // },
   ]
 }

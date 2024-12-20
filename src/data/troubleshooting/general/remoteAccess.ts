@@ -49,10 +49,10 @@ export const remoteAccess: Equipment = {
                 "step": 4,
                 "instruction": "Check the power light on the remote access computer",
                 "details": "Confirm with a staff member if the remote access computer has a blue, red, or no light on the power button.",
-                "question": "Ask if light is blue, red, or no light. Blue light = Step 5 click yes, Red light = Step 6, No light = Step 7",
+                "question": "Ask if light is blue, red, or no light. Blue light = Step 5 click yes, Red light = Step 6, No light = Step 7. CLICK ON VIEW ALL STEPS TO GET TO THE RIGHT STEP",
                 "failureAction": "Proceed to the relevant step below based on light status.",
                 "image": "https://clnproduction.s3.amazonaws.com/photoAlbums/Tes/df84c38a01ae4221aa0a457d0f7b642d801296f0bd5011efaeef917b1f500685.png",
-                "nextStepOnFailure": 5,
+                "nextStepOnFailure": 4,
                 "resolvesIssue": false,
                 "successMessage": "The computer is now powered on. Refresh LogMeIn to check if it's back up."
               },
